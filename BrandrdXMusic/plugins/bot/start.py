@@ -1,7 +1,8 @@
 import time
 import asyncio
+
 from pyrogram import filters
-from pyrogram.enums import ChatType
+from pyrogram.enums import ChatType, ParseMode
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
 
@@ -9,6 +10,7 @@ import config
 from BrandrdXMusic import app
 from BrandrdXMusic.misc import _boot_
 from BrandrdXMusic.plugins.sudo.sudoers import sudoers_list
+from BrandrdXMusic.utils import emoji as e
 from BrandrdXMusic.utils.database import (
     add_served_chat,
     add_served_user,
@@ -22,6 +24,7 @@ from BrandrdXMusic.utils.formatters import get_readable_time
 from BrandrdXMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
+
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
@@ -66,8 +69,18 @@ async def start_pm(client, message: Message, _):
             key = InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text=_["S_B_8"], url=link),
-                        InlineKeyboardButton(text=_["S_B_9"], url=config.SUPPORT_CHAT),
+                        InlineKeyboardButton(
+                            text=_["S_B_8"],
+                            url=link,
+                            icon_custom_emoji_id=e.MUSIC_ID,
+                            style=ButtonStyle.PRIMARY,
+                        ),
+                        InlineKeyboardButton(
+                            text=_["S_B_9"],
+                            url=config.SUPPORT_CHAT,
+                            icon_custom_emoji_id=e.HEART_ID,
+                            style=ButtonStyle.SUCCESS,
+                        ),
                     ],
                 ]
             )
@@ -84,58 +97,40 @@ async def start_pm(client, message: Message, _):
                     text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
     else:
-
         try:
             out = private_panel(_)
-            lol = await message.reply_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ︎ {}.. ❣️".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🥳".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💥".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🤩".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💌".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💞".format(message.from_user.mention))
-               
+            mention = message.from_user.mention
+            lol = await message.reply_text(
+                f"{e.SPARKLE} <b>Welcome {mention}!</b>\n\n{e.MUSIC} <i>Starting your music experience...</i>",
+                parse_mode=ParseMode.HTML,
+            )
+            await asyncio.sleep(0.8)
+            await lol.edit_text(
+                f"{e.BOLT} <b>Loading modules...</b>\n\n{e.CLOCK} <i>Please wait a moment</i>",
+                parse_mode=ParseMode.HTML,
+            )
+            await asyncio.sleep(0.8)
+            await lol.edit_text(
+                f"{e.FIRE} <b>Almost ready...</b>\n\n{e.SPARKLE} <i>Preparing your dashboard</i>",
+                parse_mode=ParseMode.HTML,
+            )
+            await asyncio.sleep(0.8)
             await lol.delete()
-            lols = await message.reply_text("**⚡️ѕ**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("⚡ѕт")        
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтα**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαя**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαят**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятι**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιи**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg.**")
-
-            await lols.edit_text("**⚡ѕтαятιиg....**")
-
-            await lols.edit_text("**⚡ѕтαятιиg.**")
-            await lols.edit_text("**⚡ѕтαятιиg....**")
             m = await message.reply_sticker("CAACAgUAAxkBAAEQI1BlTLmx7PtOO3aPNshEU2gCy7iAFgACNQUAApqMuVeA6eJ50VbvmDME")
             if message.chat.photo:
-
                 userss_photo = await app.download_media(
                     message.chat.photo.big_file_id,
                 )
             else:
                 userss_photo = "assets/nodp.png"
-            if userss_photo:
-                chat_photo = userss_photo
-            chat_photo = userss_photo if userss_photo else START_IMG_URL
-
+            chat_photo = userss_photo if userss_photo else config.START_IMG_URL
         except AttributeError:
             chat_photo = "assets/nodp.png"
-        await lols.delete()
         await m.delete()
         await message.reply_photo(
             photo=chat_photo,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
+            parse_mode=ParseMode.HTML,
             reply_markup=InlineKeyboardMarkup(out),
         )
         if await is_on_off(config.LOG):
@@ -144,16 +139,19 @@ async def start_pm(client, message: Message, _):
             return await app.send_message(
                 config.LOG_GROUP_ID,
                 f"{message.from_user.mention} ʜᴀs sᴛᴀʀᴛᴇᴅ ʙᴏᴛ. \n\n**ᴜsᴇʀ ɪᴅ : {sender_id}\n**ᴜsᴇʀ ɴᴀᴍᴇ: {sender_name}",
-            )          
+            )
+
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
+    mention = message.from_user.mention
     await message.reply_photo(
         photo=config.START_IMG_URL,
         caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
+        parse_mode=ParseMode.HTML,
         reply_markup=InlineKeyboardMarkup(out),
     )
     return await add_served_chat(message.chat.id)
@@ -186,18 +184,19 @@ async def welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
+                mention = message.from_user.mention if message.from_user else "Someone"
                 await message.reply_photo(
                     photo=config.START_IMG_URL,
                     caption=_["start_3"].format(
-                        message.from_user.first_name,
+                        mention,
                         app.mention,
                         message.chat.title,
                         app.mention,
                     ),
+                    parse_mode=ParseMode.HTML,
                     reply_markup=InlineKeyboardMarkup(out),
                 )
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()
         except Exception as ex:
             print(ex)
-
