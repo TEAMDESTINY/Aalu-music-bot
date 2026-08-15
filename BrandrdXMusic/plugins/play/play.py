@@ -9,6 +9,7 @@ import config
 from BrandrdXMusic import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
 from BrandrdXMusic.core.call import Hotty
 from BrandrdXMusic.utils import seconds_to_min, time_to_seconds
+from BrandrdXMusic.utils import emoji as e
 from BrandrdXMusic.utils.channelplay import get_channeplayCB
 from BrandrdXMusic.utils.decorators.language import languageCB
 from BrandrdXMusic.utils.decorators.play import PlayWrapper
@@ -23,6 +24,20 @@ from BrandrdXMusic.utils.inline import (
 from BrandrdXMusic.utils.logger import play_logs
 from BrandrdXMusic.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
+
+
+# ── Loading UI ────────────────────────────────────
+LOADING_TEXTS = [
+    f"{e.MUSIC} <b>Processing your request...</b>\n\n{e.SPARKLE} <i>Searching for the best quality stream</i>",
+    f"{e.SEARCH} <b>Looking for your song...</b>\n\n{e.BOLT} <i>Fetching track details</i>",
+    f"{e.HEAD if hasattr(e, 'HEAD') else e.MUSIC} <b>Preparing playback...</b>\n\n{e.CLOCK} <i>Almost ready, please wait</i>",
+    f"{e.FIRE} <b>Cooking your music...</b>\n\n{e.SPARKLE} <i>This will only take a moment</i>",
+    f"{e.NOTE} <b>Loading track...</b>\n\n{e.BOLT} <i>Connecting to voice chat</i>",
+]
+
+
+def _loading_text():
+    return random.choice(LOADING_TEXTS)
 
 
 @app.on_message(
@@ -53,9 +68,7 @@ async def play_commnd(
     url,
     fplay,
 ):
-    mystic = await message.reply_text(
-        _["play_2"].format(channel) if channel else _["play_1"]
-    )
+    mystic = await message.reply_text(_loading_text())
     plist_id = None
     slider = None
     plist_type = None
@@ -104,9 +117,9 @@ async def play_commnd(
                     streamtype="telegram",
                     forceplay=fplay,
                 )
-            except Exception as e:
-                ex_type = type(e).__name__
-                err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
+            except Exception as ex:
+                ex_type = type(ex).__name__
+                err = ex if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
                 return await mystic.edit_text(err)
             return await mystic.delete()
         return
@@ -148,9 +161,9 @@ async def play_commnd(
                     streamtype="telegram",
                     forceplay=fplay,
                 )
-            except Exception as e:
-                ex_type = type(e).__name__
-                err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
+            except Exception as ex:
+                ex_type = type(ex).__name__
+                err = ex if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
                 return await mystic.edit_text(err)
             return await mystic.delete()
         return
@@ -281,9 +294,9 @@ async def play_commnd(
                     streamtype="soundcloud",
                     forceplay=fplay,
                 )
-            except Exception as e:
-                ex_type = type(e).__name__
-                err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
+            except Exception as ex:
+                ex_type = type(ex).__name__
+                err = ex if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
                 return await mystic.edit_text(err)
             return await mystic.delete()
         else:
@@ -295,8 +308,8 @@ async def play_commnd(
                     chat_id=config.LOGGER_ID,
                     text=_["play_17"],
                 )
-            except Exception as e:
-                return await mystic.edit_text(_["general_2"].format(type(e).__name__))
+            except Exception as ex:
+                return await mystic.edit_text(_["general_2"].format(type(ex).__name__))
             await mystic.edit_text(_["str_2"])
             try:
                 await stream(
@@ -311,9 +324,9 @@ async def play_commnd(
                     streamtype="index",
                     forceplay=fplay,
                 )
-            except Exception as e:
-                ex_type = type(e).__name__
-                err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
+            except Exception as ex:
+                ex_type = type(ex).__name__
+                err = ex if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
                 return await mystic.edit_text(err)
             return await play_logs(message, streamtype="M3u8 or Index Link")
     else:
@@ -367,9 +380,9 @@ async def play_commnd(
                 spotify=spotify,
                 forceplay=fplay,
             )
-        except Exception as e:
-            ex_type = type(e).__name__
-            err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
+        except Exception as ex:
+            ex_type = type(ex).__name__
+            err = ex if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
             return await mystic.edit_text(err)
         await mystic.delete()
         return await play_logs(message, streamtype=streamtype)
@@ -453,9 +466,7 @@ async def play_music(client, CallbackQuery, _):
         await CallbackQuery.answer()
     except:
         pass
-    mystic = await CallbackQuery.message.reply_text(
-        _["play_2"].format(channel) if channel else _["play_1"]
-    )
+    mystic = await CallbackQuery.message.reply_text(_loading_text())
     try:
         details, track_id = await YouTube.track(vidid, True)
     except:
@@ -494,9 +505,9 @@ async def play_music(client, CallbackQuery, _):
             streamtype="youtube",
             forceplay=ffplay,
         )
-    except Exception as e:
-        ex_type = type(e).__name__
-        err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
+    except Exception as ex:
+        ex_type = type(ex).__name__
+        err = ex if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
         return await mystic.edit_text(err)
     return await mystic.delete()
 
@@ -540,9 +551,7 @@ async def play_playlists_command(client, CallbackQuery, _):
         await CallbackQuery.answer()
     except:
         pass
-    mystic = await CallbackQuery.message.reply_text(
-        _["play_2"].format(channel) if channel else _["play_1"]
-    )
+    mystic = await CallbackQuery.message.reply_text(_loading_text())
     videoid = lyrical.get(videoid)
     video = True if mode == "v" else None
     ffplay = True if fplay == "f" else None
@@ -592,9 +601,9 @@ async def play_playlists_command(client, CallbackQuery, _):
             spotify=spotify,
             forceplay=ffplay,
         )
-    except Exception as e:
-        ex_type = type(e).__name__
-        err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
+    except Exception as ex:
+        ex_type = type(ex).__name__
+        err = ex if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
         return await mystic.edit_text(err)
     return await mystic.delete()
 
@@ -660,4 +669,4 @@ async def slider_queries(client, CallbackQuery, _):
         )
         return await CallbackQuery.edit_message_media(
             media=med, reply_markup=InlineKeyboardMarkup(buttons)
-)
+        )
