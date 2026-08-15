@@ -1,13 +1,21 @@
+try:
+    from pyrogram.enums import ButtonStyle
+except ImportError:
+    class ButtonStyle:
+        PRIMARY = "primary"
+        SECONDARY = "secondary"
+        SUCCESS = "success"
+        DANGER = "danger"
+        DEFAULT = "default"
+
 import math
 
-from pyrogram.enums import ButtonStyle
 from pyrogram.types import InlineKeyboardButton
 
 from BrandrdXMusic.utils import emoji as e
 from BrandrdXMusic.utils.formatters import time_to_seconds
 
 
-# Track Markup
 def track_markup(_, videoid, user_id, channel, fplay):
     return [
         [
@@ -33,7 +41,6 @@ def track_markup(_, videoid, user_id, channel, fplay):
     ]
 
 
-# Stream Timer Markup
 def stream_markup_timer(_, vidid, chat_id, played, dur):
     played_sec = time_to_seconds(played)
     duration_sec = time_to_seconds(dur) or 1
@@ -111,7 +118,6 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
     ]
 
 
-# Stream Markup
 def stream_markup(_, videoid, chat_id):
     return [
         [
@@ -156,7 +162,6 @@ def stream_markup(_, videoid, chat_id):
     ]
 
 
-# Playlist Markup
 def playlist_markup(_, videoid, user_id, ptype, channel, fplay):
     return [
         [
@@ -182,7 +187,6 @@ def playlist_markup(_, videoid, user_id, ptype, channel, fplay):
     ]
 
 
-# Livestream Markup
 def livestream_markup(_, videoid, user_id, mode, channel, fplay):
     return [
         [
@@ -202,7 +206,6 @@ def livestream_markup(_, videoid, user_id, mode, channel, fplay):
     ]
 
 
-# Slider Markup
 def slider_markup(_, videoid, user_id, query, query_type, channel, fplay):
     query = f"{query[:20]}"
     return [
