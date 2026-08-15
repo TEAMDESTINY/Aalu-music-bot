@@ -5,6 +5,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from BrandrdXMusic import app
+from BrandrdXMusic.utils import emoji as e
 
 fetch = AsyncClient(
     http2=True,
@@ -49,7 +50,6 @@ async def get_message_sender_name(ctx: Message):
                 if ctx.forward_from.last_name
                 else ctx.forward_from.first_name
             )
-
         elif ctx.forward_from_chat:
             return ctx.forward_from_chat.title
         else:
@@ -57,8 +57,7 @@ async def get_message_sender_name(ctx: Message):
     elif ctx.from_user:
         if ctx.from_user.last_name:
             return f"{ctx.from_user.first_name} {ctx.from_user.last_name}"
-        else:
-            return ctx.from_user.first_name
+        return ctx.from_user.first_name
     elif ctx.sender_chat:
         return ctx.sender_chat.title
     else:
@@ -75,7 +74,6 @@ async def get_custom_emoji(ctx: Message):
             or not ctx.forward_from
             else ctx.forward_from.emoji_status.custom_emoji_id
         )
-
     return ctx.from_user.emoji_status.custom_emoji_id if ctx.from_user else ""
 
 
@@ -144,7 +142,6 @@ async def get_message_sender_photo(ctx: Message):
                 if ctx.forward_from.photo
                 else ""
             )
-
     elif ctx.from_user and ctx.from_user.photo:
         return {
             "small_file_id": ctx.from_user.photo.small_file_id,
@@ -214,16 +211,10 @@ async def pyrogram_to_quotly(messages, is_reply):
         the_message_dict_to_append["avatar"] = True
         the_message_dict_to_append["from"] = {}
         the_message_dict_to_append["from"]["id"] = await get_message_sender_id(message)
-        the_message_dict_to_append["from"]["name"] = await get_message_sender_name(
-            message
-        )
-        the_message_dict_to_append["from"]["username"] = (
-            await get_message_sender_username(message)
-        )
+        the_message_dict_to_append["from"]["name"] = await get_message_sender_name(message)
+        the_message_dict_to_append["from"]["username"] = await get_message_sender_username(message)
         the_message_dict_to_append["from"]["type"] = message.chat.type.name.lower()
-        the_message_dict_to_append["from"]["photo"] = await get_message_sender_photo(
-            message
-        )
+        the_message_dict_to_append["from"]["photo"] = await get_message_sender_photo(message)
         if message.reply_to_message and is_reply:
             the_message_dict_to_append["replyMessage"] = {
                 "name": await get_message_sender_name(message.reply_to_message),
@@ -251,7 +242,7 @@ def isArgInt(txt) -> list:
 
 @app.on_message(filters.command(["q", "r"]) & filters.reply)
 async def msg_quotly_cmd(self: app, ctx: Message):
-    ww = await ctx.reply_text("ᴡᴀɪᴛ ᴀ sᴇᴄᴏɴᴅ......")
+    ww = await ctx.reply_text(f"{e.SPARKLE} <b>Generating quote...</b>")
     is_reply = False
     if ctx.command[0].endswith("r"):
         is_reply = True
@@ -260,7 +251,7 @@ async def msg_quotly_cmd(self: app, ctx: Message):
         if check_arg[0]:
             if check_arg[1] < 2 or check_arg[1] > 10:
                 await ww.delete()
-                return await ctx.reply_msg("Invalid range", del_in=6)
+                return await ctx.reply_text(f"{e.WARNING} Invalid range", quote=True)
             try:
                 messages = [
                     i
@@ -275,16 +266,17 @@ async def msg_quotly_cmd(self: app, ctx: Message):
                     if not i.empty and not i.media
                 ]
             except Exception:
-                return await ctx.reply_text("🤷🏻‍♂️")
+                await ww.delete()
+                return await ctx.reply_text(f"{e.WARNING} Failed to fetch messages", quote=True)
             try:
                 make_quotly = await pyrogram_to_quotly(messages, is_reply=is_reply)
                 bio_sticker = BytesIO(make_quotly)
-                bio_sticker.name = "misskatyquote_sticker.webp"
+                bio_sticker.name = "quote_sticker.webp"
                 await ww.delete()
                 return await ctx.reply_sticker(bio_sticker)
             except Exception:
                 await ww.delete()
-                return await ctx.reply_msg("🤷🏻‍♂️")
+                return await ctx.reply_text(f"{e.WARNING} Quote generation failed", quote=True)
     try:
         messages_one = await self.get_messages(
             chat_id=ctx.chat.id, message_ids=ctx.reply_to_message.id, replies=-1
@@ -292,16 +284,16 @@ async def msg_quotly_cmd(self: app, ctx: Message):
         messages = [messages_one]
     except Exception:
         await ww.delete()
-        return await ctx.reply_msg("🤷🏻‍♂️")
+        return await ctx.reply_text(f"{e.WARNING} Failed to fetch message", quote=True)
     try:
         make_quotly = await pyrogram_to_quotly(messages, is_reply=is_reply)
         bio_sticker = BytesIO(make_quotly)
-        bio_sticker.name = "misskatyquote_sticker.webp"
+        bio_sticker.name = "quote_sticker.webp"
         await ww.delete()
         return await ctx.reply_sticker(bio_sticker)
     except Exception as e:
         await ww.delete()
-        return await ctx.reply_msg(f"ERROR: {e}")
+        return await ctx.reply_text(f"{e.WARNING} Error: {e}", quote=True)
 
 
 __HELP__ = """
@@ -313,9 +305,8 @@ __HELP__ = """
 - `/r`: ᴄʀᴇᴀᴛᴇ ᴀ ǫᴜᴏᴛᴇ ғʀᴏᴍ ᴀ sɪɴɢʟᴇ ᴍᴇssᴀɢᴇ ᴀɴᴅ ɪᴛs ʀᴇᴘʟɪᴇᴅ ᴍᴇssᴀɢᴇ.
 
 **ᴇxᴀᴍᴘʟᴇs:**
-- `/q `: ᴄʀᴇᴀᴛᴇ ᴀ ǫᴜᴏᴛᴇ ғʀᴏᴍ ʀᴇᴘʟɪᴇᴅ ᴍᴇssᴀɢᴇs.
-
-- `/r `: ᴄʀᴇᴀᴛᴇ ᴀ ǫᴜᴏᴛᴇ ғʀᴏᴍ ʀᴇᴘʟɪᴇᴅ ᴍᴇssᴀɢᴇs.
+- `/q`: ᴄʀᴇᴀᴛᴇ ᴀ ǫᴜᴏᴛᴇ ғʀᴏᴍ ʀᴇᴘʟɪᴇᴅ ᴍᴇssᴀɢᴇs.
+- `/r`: ᴄʀᴇᴀᴛᴇ ᴀ ǫᴜᴏᴛᴇ ғʀᴏᴍ ʀᴇᴘʟɪᴇᴅ ᴍᴇssᴀɢᴇs.
 
 **ɴᴏᴛᴇ:**
 ᴍᴀᴋᴇ sᴜʀᴇ ᴛᴏ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ғᴏʀ ᴛʜᴇ ǫᴜᴏᴛᴇ ᴄᴏᴍᴍᴀɴᴅ ᴛᴏ ᴡᴏʀᴋ.
