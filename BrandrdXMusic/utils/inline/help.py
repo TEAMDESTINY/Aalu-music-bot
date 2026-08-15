@@ -1,6 +1,15 @@
+try:
+    from pyrogram.enums import ButtonStyle
+except ImportError:
+    class ButtonStyle:
+        PRIMARY = "primary"
+        SECONDARY = "secondary"
+        SUCCESS = "success"
+        DANGER = "danger"
+        DEFAULT = "default"
+
 from typing import Union
 
-from pyrogram.enums import ButtonStyle
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from BrandrdXMusic import app
