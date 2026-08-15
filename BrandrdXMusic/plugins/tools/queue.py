@@ -2,6 +2,7 @@ import asyncio
 import os
 
 from pyrogram import filters
+from pyrogram.enums import ParseMode
 from pyrogram.errors import FloodWait
 from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 
@@ -9,6 +10,7 @@ import config
 from BrandrdXMusic import app
 from BrandrdXMusic.misc import db
 from BrandrdXMusic.utils import HottyBin, get_channeplayCB, seconds_to_min
+from BrandrdXMusic.utils import emoji as e
 from BrandrdXMusic.utils.database import get_cmode, is_active_chat, is_music_playing
 from BrandrdXMusic.utils.decorators.language import language, languageCB
 from BrandrdXMusic.utils.inline import queue_back_markup, queue_markup
@@ -83,7 +85,13 @@ async def get_queue(client, message: Message, _):
         else:
             IMAGE = get_image(videoid)
     send = _["queue_6"] if DUR == "Unknown" else _["queue_7"]
-    cap = _["queue_8"].format(app.mention, title, typo, user, send)
+    cap = (
+        f"{e.MUSIC} <b>{app.mention}'s Player</b>\n\n"
+        f"{e.HEAD if hasattr(e, 'HEAD') else e.MUSIC} <b>Streaming:</b> {title}\n"
+        f"{e.BOLT} <b>Stream Type:</b> {typo}\n"
+        f"{e.PROFILE} <b>Requested By:</b> {user}\n"
+        f"{send}"
+    )
     upl = (
         queue_markup(_, DUR, "c" if cplay else "g", videoid)
         if DUR == "Unknown"
@@ -97,7 +105,7 @@ async def get_queue(client, message: Message, _):
         )
     )
     basic[videoid] = True
-    mystic = await message.reply_photo(IMAGE, caption=cap, reply_markup=upl)
+    mystic = await message.reply_photo(IMAGE, caption=cap, parse_mode=ParseMode.HTML, reply_markup=upl)
     if DUR != "Unknown":
         try:
             while db[chat_id][0]["vidid"] == videoid:
@@ -165,11 +173,11 @@ async def queued_tracks(client, CallbackQuery: CallbackQuery, _):
     for x in got:
         j += 1
         if j == 1:
-            msg += f'Streaming :\n\n✨ Title : {x["title"]}\nDuration : {x["dur"]}\nBy : {x["by"]}\n\n'
+            msg += f'{e.MUSIC} Streaming :\n\n{e.SPARKLE} Title : {x["title"]}\n{e.CLOCK} Duration : {x["dur"]}\n{e.PROFILE} By : {x["by"]}\n\n'
         elif j == 2:
-            msg += f'Queued :\n\n✨ Title : {x["title"]}\nDuration : {x["dur"]}\nBy : {x["by"]}\n\n'
+            msg += f'{e.INBOX} Queued :\n\n{e.SPARKLE} Title : {x["title"]}\n{e.CLOCK} Duration : {x["dur"]}\n{e.PROFILE} By : {x["by"]}\n\n'
         else:
-            msg += f'✨ Title : {x["title"]}\nDuration : {x["dur"]}\nBy : {x["by"]}\n\n'
+            msg += f'{e.SPARKLE} Title : {x["title"]}\n{e.CLOCK} Duration : {x["dur"]}\n{e.PROFILE} By : {x["by"]}\n\n'
     if "Queued" in msg:
         if len(msg) < 700:
             await asyncio.sleep(1)
@@ -223,7 +231,13 @@ async def queue_back(client, CallbackQuery: CallbackQuery, _):
         else:
             IMAGE = get_image(videoid)
     send = _["queue_6"] if DUR == "Unknown" else _["queue_7"]
-    cap = _["queue_8"].format(app.mention, title, typo, user, send)
+    cap = (
+        f"{e.MUSIC} <b>{app.mention}'s Player</b>\n\n"
+        f"{e.MUSIC} <b>Streaming:</b> {title}\n"
+        f"{e.BOLT} <b>Stream Type:</b> {typo}\n"
+        f"{e.PROFILE} <b>Requested By:</b> {user}\n"
+        f"{send}"
+    )
     upl = (
         queue_markup(_, DUR, cplay, videoid)
         if DUR == "Unknown"
