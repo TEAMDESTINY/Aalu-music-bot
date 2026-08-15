@@ -1,4 +1,13 @@
-from pyrogram.enums import ButtonStyle
+try:
+    from pyrogram.enums import ButtonStyle
+except ImportError:
+    class ButtonStyle:
+        PRIMARY = "primary"
+        SECONDARY = "secondary"
+        SUCCESS = "success"
+        DANGER = "danger"
+        DEFAULT = "default"
+
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from config import SUPPORT_CHAT
