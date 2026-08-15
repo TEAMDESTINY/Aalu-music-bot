@@ -1,4 +1,13 @@
-from pyrogram.enums import ButtonStyle
+try:
+    from pyrogram.enums import ButtonStyle
+except ImportError:
+    class ButtonStyle:
+        PRIMARY = "primary"
+        SECONDARY = "secondary"
+        SUCCESS = "success"
+        DANGER = "danger"
+        DEFAULT = "default"
+
 from pyrogram.types import InlineKeyboardButton
 
 import config
@@ -40,7 +49,7 @@ def private_panel(_):
             InlineKeyboardButton(
                 text=_["S_B_4"],
                 callback_data="settings_back_helper",
-                icon_custom_emoji_id=e.BOOK_ID if hasattr(e, "BOOK_ID") else e.SEARCH_ID,
+                icon_custom_emoji_id=e.SEARCH_ID,
                 style=ButtonStyle.SUCCESS,
             )
         ],
@@ -62,7 +71,7 @@ def private_panel(_):
             InlineKeyboardButton(
                 text=_["S_B_6"],
                 url=config.SUPPORT_CHANNEL,
-                icon_custom_emoji_id=e.MEGA_ID if hasattr(e, "MEGA_ID") else e.BOLT1_ID,
+                icon_custom_emoji_id=e.BOLT1_ID,
                 style=ButtonStyle.DEFAULT,
             ),
         ],
