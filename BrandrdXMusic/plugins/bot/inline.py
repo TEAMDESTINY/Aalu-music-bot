@@ -1,3 +1,4 @@
+from pyrogram.enums import ButtonStyle, ParseMode
 from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
@@ -6,6 +7,7 @@ from pyrogram.types import (
 from youtubesearchpython.__future__ import VideosSearch
 
 from BrandrdXMusic import app
+from BrandrdXMusic.utils import emoji as e
 from BrandrdXMusic.utils.inlinequery import answer
 from config import BANNED_USERS
 
@@ -31,27 +33,27 @@ async def inline_query_handler(client, query):
             channel = result[x]["channel"]["name"]
             link = result[x]["link"]
             published = result[x]["publishedTime"]
-            description = f"{views} | {duration} ᴍɪɴᴜᴛᴇs | {channel}  | {published}"
+            description = f"{views} | {duration} Mins | {channel} | {published}"
             buttons = InlineKeyboardMarkup(
                 [
                     [
                         InlineKeyboardButton(
-                            text="ʏᴏᴜᴛᴜʙᴇ 🎄",
+                            text="YouTube",
                             url=link,
+                            icon_custom_emoji_id=e.MUSIC_ID,
+                            style=ButtonStyle.PRIMARY,
                         )
                     ],
                 ]
             )
-            searched_text = f"""
-❄ <b>ᴛɪᴛʟᴇ :</b> <a href={link}>{title}</a>
-
-⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {duration} ᴍɪɴᴜᴛᴇs
-👀 <b>ᴠɪᴇᴡs :</b> <code>{views}</code>
-🎥 <b>ᴄʜᴀɴɴᴇʟ :</b> <a href={channellink}>{channel}</a>
-⏰ <b>ᴘᴜʙʟɪsʜᴇᴅ ᴏɴ :</b> {published}
-
-
-<u><b>➻ ɪɴʟɪɴᴇ sᴇᴀʀᴄʜ ᴍᴏᴅᴇ ʙʏ {app.name}</b></u>"""
+            searched_text = (
+                f"{e.MUSIC} <b>Title :</b> <a href={link}>{title}</a>\n\n"
+                f"{e.CLOCK} <b>Duration :</b> {duration} Mins\n"
+                f"{e.EYES} <b>Views :</b> <code>{views}</code>\n"
+                f"{e.BOLT} <b>Channel :</b> <a href={channellink}>{channel}</a>\n"
+                f"{e.PIN} <b>Published On :</b> {published}\n\n"
+                f"{e.SPARKLE} <b>➻ Inline Search Mode By {app.name}</b>"
+            )
             answers.append(
                 InlineQueryResultPhoto(
                     photo_url=thumbnail,
