@@ -2,6 +2,7 @@ from pyrogram.enums import ButtonStyle
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from config import SUPPORT_CHAT
+from BrandrdXMusic.utils import emoji as e
 
 
 def botplaylist_markup(_):
@@ -10,11 +11,13 @@ def botplaylist_markup(_):
             InlineKeyboardButton(
                 text=_["S_B_9"],
                 url=SUPPORT_CHAT,
+                icon_custom_emoji_id=e.HEART_ID,
                 style=ButtonStyle.SUCCESS,
             ),
             InlineKeyboardButton(
                 text=_["CLOSE_BUTTON"],
                 callback_data="close",
+                icon_custom_emoji_id=e.BLOCK_ID,
                 style=ButtonStyle.DANGER,
             ),
         ],
@@ -28,12 +31,14 @@ def close_markup(_):
             [
                 InlineKeyboardButton(
                     text="Support",
-                    url=f"t.me/link_buyer",
+                    url=f"https://t.me/BRANDED_WORLD",
+                    icon_custom_emoji_id=e.HEART_ID,
                     style=ButtonStyle.SUCCESS,
                 ),
                 InlineKeyboardButton(
                     text=_["CLOSE_BUTTON"],
                     callback_data="close",
+                    icon_custom_emoji_id=e.BLOCK_ID,
                     style=ButtonStyle.DANGER,
                 ),
             ]
@@ -49,6 +54,7 @@ def supp_markup(_):
                 InlineKeyboardButton(
                     text=_["S_B_9"],
                     url=SUPPORT_CHAT,
+                    icon_custom_emoji_id=e.HEART_ID,
                     style=ButtonStyle.SUCCESS,
                 ),
             ]
