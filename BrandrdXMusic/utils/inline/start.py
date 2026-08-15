@@ -12,13 +12,11 @@ def start_panel(_):
             InlineKeyboardButton(
                 text=_["S_B_1"],
                 url=f"https://t.me/{app.username}?startgroup=true",
-                icon_custom_emoji_id=e.PLUS_ID if hasattr(e, "PLUS_ID") else None,
                 style=ButtonStyle.PRIMARY,
             ),
             InlineKeyboardButton(
                 text=_["S_B_2"],
                 url=config.SUPPORT_CHAT,
-                icon_custom_emoji_id=e.CHAT_ID if hasattr(e, "CHAT_ID") else None,
                 style=ButtonStyle.SUCCESS,
             ),
         ],
