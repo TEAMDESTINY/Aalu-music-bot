@@ -1,7 +1,8 @@
 import asyncio
 import importlib
 from sys import argv
-from pyrogram import idle
+
+from pyrogram import filters, idle
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
@@ -9,8 +10,28 @@ from BrandrdXMusic import LOGGER, app, userbot
 from BrandrdXMusic.core.call import Hotty
 from BrandrdXMusic.misc import sudo
 from BrandrdXMusic.plugins import ALL_MODULES
+from BrandrdXMusic.utils import emoji as e
 from BrandrdXMusic.utils.database import get_banned_users, get_gbanned
 from config import BANNED_USERS
+
+
+@app.on_message(filters.new_chat_members)
+async def auto_join_assistant(client, message):
+    """Auto-join assistant when bot is added to a group."""
+    try:
+        if not message.new_chat_members:
+            return
+        bot_added = any(member.id == app.id for member in message.new_chat_members)
+        if not bot_added:
+            return
+        chat_id = message.chat.id
+        try:
+            await userbot.join_chat(chat_id)
+            LOGGER(__name__).info(f"Assistant joined chat {chat_id}")
+        except Exception as exc:
+            LOGGER(__name__).warning(f"Assistant join failed for {chat_id}: {exc}")
+    except Exception as exc:
+        LOGGER(__name__).error(f"auto_join_assistant error: {exc}")
 
 
 async def init():
@@ -43,14 +64,14 @@ async def init():
         await Hotty.stream_call("https://graph.org/file/e999c40cb700e7c684b75.mp4")
     except NoActiveGroupCall:
         LOGGER("BrandrdXMusic").error(
-            "Please turn on the videochat of your log group\channel.\n\nStopping Bot..."
+            "Please turn on the videochat of your log group\\channel.\\n\\nStopping Bot..."
         )
         exit()
     except:
         pass
     await Hotty.decorators()
     LOGGER("BrandrdXMusic").info(
-        "ᴅʀᴏᴘ ʏᴏᴜʀ ɢɪʀʟꜰʀɪᴇɴᴅ'ꜱ ɴᴜᴍʙᴇʀ ᴀᴛ @BRANDED_PAID_CC ᴊᴏɪɴ @BRANDRD_BOT , @BRANDED_WORLD ꜰᴏʀ ᴀɴʏ ɪꜱꜱᴜᴇꜱ"
+        f"{e.MUSIC} Bot Started Successfully | {e.BOLT} @BRANDRD_BOT"
     )
     await idle()
     await app.stop()
