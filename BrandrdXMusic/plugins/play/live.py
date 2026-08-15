@@ -1,6 +1,8 @@
 from pyrogram import filters
+from pyrogram.enums import ParseMode
 
 from BrandrdXMusic import YouTube, app
+from BrandrdXMusic.utils import emoji as e
 from BrandrdXMusic.utils.channelplay import get_channeplayCB
 from BrandrdXMusic.utils.decorators.language import languageCB
 from BrandrdXMusic.utils.stream.stream import stream
@@ -30,12 +32,16 @@ async def play_live_stream(client, CallbackQuery, _):
     except:
         pass
     mystic = await CallbackQuery.message.reply_text(
-        _["play_2"].format(channel) if channel else _["play_1"]
+        f"{e.BOLT} <b>Processing live stream...</b>\n\n{e.SPARKLE} <i>Please wait...</i>",
+        parse_mode=ParseMode.HTML,
     )
     try:
         details, track_id = await YouTube.track(vidid, True)
     except:
-        return await mystic.edit_text(_["play_3"])
+        return await mystic.edit_text(
+            f"{e.WARNING} <b>Failed to fetch track details.</b>",
+            parse_mode=ParseMode.HTML,
+        )
     ffplay = True if fplay == "f" else None
     if not details["duration_min"]:
         try:
@@ -51,10 +57,16 @@ async def play_live_stream(client, CallbackQuery, _):
                 streamtype="live",
                 forceplay=ffplay,
             )
-        except Exception as e:
-            ex_type = type(e).__name__
-            err = e if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
-            return await mystic.edit_text(err)
+        except Exception as ex:
+            ex_type = type(ex).__name__
+            err = ex if ex_type == "AssistantErr" else _["general_2"].format(ex_type)
+            return await mystic.edit_text(
+                f"{e.WARNING} <b>{err}</b>",
+                parse_mode=ParseMode.HTML,
+            )
     else:
-        return await mystic.edit_text("» ɴᴏᴛ ᴀ ʟɪᴠᴇ sᴛʀᴇᴀᴍ.")
+        return await mystic.edit_text(
+            f"{e.BLOCK} <b>Not a live stream.</b>",
+            parse_mode=ParseMode.HTML,
+        )
     await mystic.delete()
