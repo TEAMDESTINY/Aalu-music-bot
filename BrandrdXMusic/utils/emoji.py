@@ -1,0 +1,126 @@
+"""Premium animated emoji constants for BrandrdXMusic."""
+
+
+def _e(eid: str, glyph: str) -> str:
+    return f'<emoji id="{eid}">{glyph}</emoji>'
+
+
+# ── Premium emoji IDs (Guide batch) ───────────────
+NOTE_ID       = "6086714986309097798"  # 💜
+MUSIC_ID      = "5409025823388741707"  # 🎵
+CLOCK_ID      = "5408910404732595664"  # 🕐
+COMET_ID      = "5041992177563993101"  # ☄️
+WARNING_ID    = "5039665997506675838"  # ⚠️
+LIPS_ID       = "5039661745489052379"  # 🫦
+ROSE1_ID      = "5039850573726221609"  # 🌹
+COOL_ID       = "5424663180838182778"  # 😎
+BOUQUET_ID    = "6089064797276477848"  # 💐
+CHEERS_ID     = "6088902851239613437"  # 🥂
+DIAMOND_ID    = "5039816072253932764"  # 💎
+CROWN_ID      = "5041792560368977040"  # 👑
+TEDDY_ID      = "5042192219960771668"  # 🧸
+HEART_EYES_ID = "6219504684927816093"  # 😻
+HEART_ID      = "6217365353127744430"  # ❤️
+SUN_ID        = "5436356474114685168"  # ☀️
+RED1_ID       = "5438522812669111826"  # 🟥
+STAR_EYES_ID  = "5226841501195065587"  # 🤩
+ROSE2_ID      = "5226806553046178400"  # 🌹
+BOW_ID        = "5226654678707622609"  # 🎀
+CHECK_ID      = "5469715729915859659"  # ✔️
+CRESCENT_ID   = "5283223151797364771"  # ☪
+INFINITY_ID   = "5469931384518755322"  # ♾
+BOLT1_ID      = "5343819952023428595"  # ⚡️
+BOLT2_ID      = "5341463333532882949"  # ⚡️
+EYES_ID       = "5408972372520743709"  # 👀
+SLIDER_ID     = "5210688971008391086"  # 🎚
+INBOX_ID      = "5443127283898405358"  # 📥
+PIN_ID        = "5039600026809009149"  # 📌
+PROFILE_ID    = "5408846628763217930"  # 👤
+RED2_ID       = "5436345165465794033"  # 🟥
+BUTTERFLY_ID  = "5084613633418199991"  # 🦋
+HEART_ORGAN_ID = "5116296632203216188"  # 🫀
+KNOB_ID       = "5116444615301399317"  # 🔘
+SPARKLE_ID    = "5134202243486057363"  # 💫
+RAINBOW_ID    = "4904819211416633963"  # 🌈
+BOMB1_ID      = "5134377151734219769"  # 💣
+BOMB2_ID      = "6138798143447244059"  # 💣
+SEARCH_ID     = "5258274739041883702"  # 🔍
+FIRE_ID       = "5222148368955877900"  # 🔥
+SMILE_ID      = "6219579614927261727"  # ☺️
+DART_ID       = "6219579614927261727"  # 🎯
+GHOST_ID      = "5082478549340783285"  # 👻
+BLOCK_ID      = "5116151848855667552"  # 🚫
+THUMBS_DOWN_ID = "5121063440311386962"  # 👎
+
+# ── Premium emoji IDs (JSON Dump batch) ───────────
+NOTE2_ID       = "6075611018380189801"    # 🎶
+GLOBE_ID       = "5819203420724137401"    # 🌐
+BUTTERFLY2_ID  = "5289862389552919154"    # 🦋
+STAR_ID        = "5341684837881235158"    # ⭐
+INFINITY2_ID   = "6195172750303172372"    # ♾
+STAR_EYES2_ID  = "6195188018911909364"    # 🤩
+BLOSSOM_ID     = "6267312004554299329"    # 🌸
+REPEAT_ID      = "5292226786229236118"    # 🔄
+BOMB3_ID       = "5454225015534805938"    # 💣
+PLATE_ID       = "6244501154072368012"    # 🍽
+HEART_FIRE_ID  = "6235719217262369481"    # ❤️‍🔥
+FIRE2_ID       = "6235628846855492222"    # 🔥
+
+# ── Snippets (premium animated) ───────────────────
+NOTE        = _e(NOTE_ID, "💜")
+NOTE2       = _e(NOTE2_ID, "🎶")
+MUSIC       = _e(MUSIC_ID, "🎵")
+CLOCK       = _e(CLOCK_ID, "🕐")
+COMET       = _e(COMET_ID, "☄️")
+WARNING     = _e(WARNING_ID, "⚠️")
+LIPS        = _e(LIPS_ID, "🫦")
+ROSE1       = _e(ROSE1_ID, "🌹")
+COOL        = _e(COOL_ID, "😎")
+BOUQUET     = _e(BOUQUET_ID, "💐")
+CHEERS      = _e(CHEERS_ID, "🥂")
+DIAMOND     = _e(DIAMOND_ID, "💎")
+CROWN       = _e(CROWN_ID, "👑")
+TEDDY       = _e(TEDDY_ID, "🧸")
+HEART_EYES  = _e(HEART_EYES_ID, "😻")
+HEART       = _e(HEART_ID, "❤️")
+SUN         = _e(SUN_ID, "☀️")
+RED1        = _e(RED1_ID, "🟥")
+STAR_EYES   = _e(STAR_EYES_ID, "🤩")
+ROSE2       = _e(ROSE2_ID, "🌹")
+BOW         = _e(BOW_ID, "🎀")
+CHECK       = _e(CHECK_ID, "✔️")
+CRESCENT    = _e(CRESCENT_ID, "☪")
+INFINITY    = _e(INFINITY_ID, "♾")
+BOLT        = _e(BOLT1_ID, "⚡️")
+BOLT2       = _e(BOLT2_ID, "⚡️")
+EYES        = _e(EYES_ID, "👀")
+SLIDER      = _e(SLIDER_ID, "🎚")
+INBOX       = _e(INBOX_ID, "📥")
+PIN         = _e(PIN_ID, "📌")
+PROFILE     = _e(PROFILE_ID, "👤")
+RED2        = _e(RED2_ID, "🟥")
+BUTTERFLY   = _e(BUTTERFLY_ID, "🦋")
+BUTTERFLY2  = _e(BUTTERFLY2_ID, "🦋")
+HEART_ORGAN = _e(HEART_ORGAN_ID, "🫀")
+KNOB        = _e(KNOB_ID, "🔘")
+SPARKLE     = _e(SPARKLE_ID, "💫")
+STAR        = _e(STAR_ID, "⭐")
+RAINBOW     = _e(RAINBOW_ID, "🌈")
+BOMB        = _e(BOMB1_ID, "💣")
+BOMB2       = _e(BOMB2_ID, "💣")
+BOMB3       = _e(BOMB3_ID, "💣")
+SEARCH      = _e(SEARCH_ID, "🔍")
+FIRE        = _e(FIRE_ID, "🔥")
+FIRE2       = _e(FIRE2_ID, "🔥")
+SMILE       = _e(SMILE_ID, "☺️")
+DART        = _e(DART_ID, "🎯")
+GHOST       = _e(GHOST_ID, "👻")
+BLOCK       = _e(BLOCK_ID, "🚫")
+THUMBS_DOWN = _e(THUMBS_DOWN_ID, "👎")
+GLOBE       = _e(GLOBE_ID, "🌐")
+INFINITY2   = _e(INFINITY2_ID, "♾")
+STAR_EYES2  = _e(STAR_EYES2_ID, "🤩")
+BLOSSOM     = _e(BLOSSOM_ID, "🌸")
+REPEAT      = _e(REPEAT_ID, "🔄")
+PLATE       = _e(PLATE_ID, "🍽")
+HEART_FIRE  = _e(HEART_FIRE_ID, "❤️‍🔥")
