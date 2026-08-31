@@ -8,9 +8,9 @@ from pyrogram.types import Message
 from py_yt import VideosSearch
 import aiohttp
 
-API_URL = os.environ.get("SHRUTI_API_URL", "https://api01.shrutibots.site")
+API_URL = os.environ.get("SHRUTI_API_URL", "https://api.nexgenbots.xyz")
 
-API_KEY = os.environ.get("SHRUTI_API_KEY", "ShrutiBots6rPgfpzUwPliWGgrvxTs") ## Get This API KEY FROM TELEGRAM BOT USERNAME: @SHRUTIAPIBOT 
+API_KEY = os.environ.get("SHRUTI_API_KEY", "30DxNexGenBotsc306fc") ## Get This API KEY FROM TELEGRAM BOT USERNAME: @SHRUTIAPIBOT 
 
 DOWNLOAD_DIR = "downloads"
 
